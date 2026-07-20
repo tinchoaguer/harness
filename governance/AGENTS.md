@@ -45,6 +45,7 @@ harness/
         human_gates.md
     agents/
         orchestrator.md
+        git-preflight.md
         spec-writer.md
         implementer.md
         reviewer.md
@@ -145,9 +146,11 @@ A lower-level document must never contradict a higher-level document.
 | Agent | Responsibility |
 |-------|----------------|
 | Orchestrator | Coordinate workflow execution; update `work/` |
+| Git Preflight | Verify git readiness before Specification |
 | Spec Writer | Produce `specs/<slug>/` per `spec_guidelines.md` |
 | Implementer | Implement approved specs; modify project source |
 | Reviewer | Validate implementation against full specification |
+
 
 No agent may perform another agent's responsibilities.
 
@@ -159,6 +162,9 @@ Every Feature follows the same lifecycle:
 
 ```
 User
+    │
+    ▼
+Git Preflight
     │
     ▼
 Specification
@@ -176,7 +182,9 @@ Review
 Completed
 ```
 
-Failures transition to **Blocked**.
+Git Preflight failure on `Start Feature` refuses the start (Feature stays Pending).
+
+Failures after a Feature has started transition to **Blocked**.
 
 Rejected specifications return to **Specification**.
 
@@ -210,6 +218,8 @@ User
    │
    ▼
 Orchestrator
+   │
+   ├────────────► Git Preflight
    │
    ├────────────► Spec Writer
    │

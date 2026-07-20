@@ -48,6 +48,7 @@ feature:
   slug: string
 
 workflow_stage:
+  - Git Preflight
   - Specification
   - Waiting for Specification Approval
   - Implementation
@@ -154,12 +155,15 @@ Maps workflow stages to feature list `status`:
 
 | workflow_stage | feature_list.status |
 |----------------|---------------------|
+| Git Preflight | Pending (on Start Feature refuse: leave unchanged; do not persist this stage) |
 | Specification | In Progress |
 | Waiting for Specification Approval | In Progress |
 | Implementation | In Progress |
 | Code Review | In Progress |
 | Completed | Done |
 | Blocked | Blocked |
+
+On `Start Feature`, Git Preflight runs before the Feature is marked `In Progress`. A non-COMPLETED result refuses the start and leaves `feature_list` / `current.md` unchanged.
 
 ---
 
@@ -213,6 +217,7 @@ blocked_reason: string  # required when status is BLOCKED
 
 | Stage | status | decision |
 |-------|--------|----------|
+| Git Preflight | COMPLETED, BLOCKED, FAILED | — |
 | Specification | COMPLETED, BLOCKED, FAILED | — |
 | Implementation | COMPLETED, BLOCKED, FAILED | — |
 | Code Review | COMPLETED, BLOCKED, FAILED | APPROVED or REJECTED |

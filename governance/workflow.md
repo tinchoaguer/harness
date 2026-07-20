@@ -18,11 +18,38 @@ A workflow begins when the user requests:
 
 > Start Feature <slug>
 
-The `slug` must match an entry in `work/feature_list.json` and `specs/<slug>/`.
+The `slug` must match an entry in `work/feature_list.json` with status `Pending`.
+
+`specs/<slug>/` is created by the Spec Writer during the Specification stage — it need not exist at start.
 
 ---
 
 # Stages
+
+## 0. Git Preflight
+
+**Responsible**
+
+- Git Preflight agent
+
+**Checks**
+
+- Current branch is `main`
+- Working tree is clean
+- No leftover `feature/<slug>` branch or open PR for any Feature with status `Done`
+
+**Output**
+
+- Common Result only (no project artifacts)
+
+**Next**
+
+- COMPLETED → Specification
+- FAILED or BLOCKED → refuse start (do not invoke Spec Writer; leave Feature `Pending`; do not update `work/progress/current.md` for a Feature that never started)
+
+When resuming into **Specification** after Blocked (or after specification rejection that returns to Specification), the Orchestrator re-invokes Git Preflight before Spec Writer.
+
+---
 
 ## 1. Specification
 
@@ -56,7 +83,7 @@ The `slug` must match an entry in `work/feature_list.json` and `specs/<slug>/`.
 **Next**
 
 - Approved → Implementation
-- Rejected → Specification
+- Rejected → Specification (re-run Git Preflight, then Spec Writer)
 
 ---
 
@@ -111,12 +138,18 @@ Execution remains suspended until external intervention.
 
 Once resumed, execution continues from the stage where the Feature was blocked.
 
+If the previous stage is **Specification**, the Orchestrator re-invokes Git Preflight before Spec Writer.
+
 ---
 
 # Workflow Transition Table
 
 | Current Stage | Event | Next Stage |
 |---------------|-------|------------|
+| (Start Feature) | — | Git Preflight |
+| Git Preflight | COMPLETED | Specification |
+| Git Preflight | FAILED | refuse start (Feature stays Pending) |
+| Git Preflight | BLOCKED | refuse start (Feature stays Pending) |
 | Specification | COMPLETED | Waiting for Specification Approval |
 | Specification | FAILED | Blocked |
 | Waiting for Specification Approval | APPROVED | Implementation |
@@ -132,11 +165,24 @@ Once resumed, execution continues from the stage where the Feature was blocked.
 
 # Transition Rules
 
+## Git Preflight Failed or Blocked
+
+On `Start Feature`, a non-COMPLETED Git Preflight result **refuses** the start:
+
+- Do not invoke Spec Writer
+- Do not set Feature status to `In Progress` or `Blocked`
+- Do not write `work/progress/current.md` for this start
+- Report the Git Preflight summary and remediation to the user
+
+The user fixes the repository (or tooling), then re-issues `Start Feature <slug>`.
+
+---
+
 ## Specification Rejected
 
 A rejected specification returns to the **Specification** stage.
 
-The Spec Writer must update the specification before it can be submitted again.
+The Orchestrator re-invokes Git Preflight, then Spec Writer. The Spec Writer must update the specification before it can be submitted again.
 
 ---
 

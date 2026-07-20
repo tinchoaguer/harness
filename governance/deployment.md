@@ -15,7 +15,7 @@ The harness ships two reusable components:
 ```
 harness/
     governance/     # rules, workflow, schemas, spec_guidelines
-    agents/         # orchestrator, spec-writer, implementer, reviewer
+    agents/         # orchestrator, git-preflight, spec-writer, implementer, reviewer
 ```
 
 Nothing else is required in the harness repository.
@@ -65,6 +65,7 @@ Copy or symlink harness agents to the global Cursor agents directory:
 
 ```text
 harness/agents/orchestrator.md   → ~/.cursor/agents/orchestrator.md
+harness/agents/git-preflight.md  → ~/.cursor/agents/git-preflight.md
 harness/agents/spec-writer.md    → ~/.cursor/agents/spec-writer.md
 harness/agents/implementer.md    → ~/.cursor/agents/implementer.md
 harness/agents/reviewer.md       → ~/.cursor/agents/reviewer.md
@@ -125,8 +126,9 @@ Copy `harness/governance/` into the project. Update manually when the harness ev
 1. Open the **project workspace** (e.g. `market-data-be/`)
 2. Start the **Orchestrator** agent
 3. User command: `Start Feature <slug>`
-4. Orchestrator invokes subagents one stage at a time via Cursor Task tool or agent handoff
-5. User approves specification at the human gate (see `human_gates.md`)
+4. Orchestrator invokes **Git Preflight**, then other subagents one stage at a time via Cursor Task tool or agent handoff
+5. If Git Preflight is not COMPLETED, Orchestrator refuses the start and reports remediation
+6. User approves specification at the human gate (see `human_gates.md`)
 
 ---
 
@@ -158,8 +160,10 @@ When harness governance changes:
 | Common Result status | Orchestrator action |
 |---------------------|---------------------|
 | COMPLETED | Transition per workflow.md |
-| FAILED | Set workflow_stage to Blocked; record blocked_from_stage |
-| BLOCKED | Set workflow_stage to Blocked; wait for user Resume |
+| FAILED (Git Preflight on Start Feature) | Refuse start; leave Feature Pending; report summary |
+| BLOCKED (Git Preflight on Start Feature) | Refuse start; leave Feature Pending; report blocked_reason |
+| FAILED (after Feature started) | Set workflow_stage to Blocked; record blocked_from_stage |
+| BLOCKED (after Feature started) | Set workflow_stage to Blocked; wait for user Resume |
 
 Review `decision` field:
 

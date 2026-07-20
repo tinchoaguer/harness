@@ -5,7 +5,7 @@ An agnostic, reusable framework for **Specification-Driven Development (SDD)**.
 ## What it provides
 
 - **Governance** — workflow, protocol, schemas, specification guidelines
-- **Agents** — Orchestrator, Spec Writer, Implementer, Reviewer
+- **Agents** — Orchestrator, Git Preflight, Spec Writer, Implementer, Reviewer
 
 ## What projects provide
 
@@ -20,6 +20,7 @@ An agnostic, reusable framework for **Specification-Driven Development (SDD)**.
 2. Follow [governance/deployment.md](governance/deployment.md) to adopt in a project
 3. Install agents to `~/.cursor/agents/`
 4. Open a project workspace and run: `Start Feature <slug>`
+5. Orchestrator invokes Git Preflight, then Spec Writer on success
 
 ## Key documents
 

@@ -88,5 +88,7 @@ Subagents must not:
 The Orchestrator must not:
 
 - skip human approval gates
+- skip Git Preflight before Spec Writer on `Start Feature` or when re-entering Specification
+- perform git/gh preflight checks itself (invoke the Git Preflight agent)
 - spawn parallel subagents for a single stage
 - reinterpret subagent results

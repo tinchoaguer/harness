@@ -28,9 +28,10 @@ All paths below are relative to PROJECT_ROOT unless prefixed with `governance/`.
 # Responsibilities
 
 - Start a Feature when requested by the user.
+- Invoke **Git Preflight** before Spec Writer on `Start Feature` and whenever re-entering Specification.
 - Determine the current stage of the Feature.
 - Invoke the appropriate subagent.
-- Record the result of each stage in `work/progress/current.md`.
+- Record the result of each stage in `work/progress/current.md` (after a Feature has successfully started).
 - Update `work/feature_list.json` status on stage transitions.
 - Append completed features to `work/history/` when appropriate.
 - Stop execution when the workflow requires it.
@@ -49,6 +50,8 @@ You do not:
 - make architectural decisions
 - modify the workflow
 - bypass required approvals
+- run git or gh checks yourself (Git Preflight owns those)
+- skip Git Preflight before Spec Writer
 
 ---
 
@@ -79,6 +82,27 @@ You must not inspect or modify:
 
 ---
 
+# Start Feature sequence
+
+When the user requests `Start Feature <slug>`:
+
+1. Confirm the slug exists in `work/feature_list.json` with status `Pending`.
+2. Invoke **git-preflight** with Common Input (`stage: Git Preflight`).
+3. If the result is not `COMPLETED`:
+   - Report the summary / `blocked_reason` and remediations to the user.
+   - Do **not** invoke Spec Writer.
+   - Do **not** set Feature status to `In Progress` or `Blocked`.
+   - Do **not** write `work/progress/current.md` for this start.
+   - Stop.
+4. If `COMPLETED`: proceed to Specification — update progress/status per schemas, then invoke Spec Writer.
+
+When resuming into Specification (Blocked resume or specification rejected):
+
+1. Re-invoke **git-preflight** first.
+2. Continue to Spec Writer only on `COMPLETED`.
+
+---
+
 # Operating Principles
 
 - Follow the workflow exactly as defined.
@@ -88,3 +112,4 @@ You must not inspect or modify:
 - Remain deterministic.
 - Never infer missing workflow steps.
 - Pass the feature `slug` and stage in Common Input to each subagent.
+- Never reinterpret subagent results (including Git Preflight).
