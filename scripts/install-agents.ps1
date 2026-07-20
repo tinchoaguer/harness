@@ -1,10 +1,10 @@
-# Install harness agent definitions into a Cursor agents directory.
+# Install agent role cards into an agent-host custom-agents directory.
 #
 # Usage:
-#   .\install-agents.ps1 -Source <harness-agents-dir> -Destination <cursor-agents-dir> [-Mode copy|symlink]
+#   .\install-agents.ps1 -Source <agents-dir> -Destination <host-agents-dir> [-Mode copy|symlink]
 #
 # Example:
-#   .\install-agents.ps1 -Source ..\agents -Destination $env:USERPROFILE\.cursor\agents
+#   .\install-agents.ps1 -Source ..\agents -Destination C:\path\to\host\agents
 
 [CmdletBinding()]
 param(

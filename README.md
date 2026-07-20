@@ -18,8 +18,8 @@ An agnostic, reusable framework for **Specification-Driven Development (SDD)**.
 
 1. Read [governance/AGENTS.md](governance/AGENTS.md) for the model overview
 2. Follow [governance/deployment.md](governance/deployment.md) to adopt in a project
-3. Install agents to `~/.cursor/agents/`
-4. Open a project workspace and run: `Start Feature <slug>`
+3. Install agent role cards into your agent host’s custom-agents directory
+4. Open PROJECT_ROOT as the workspace and run: `Start Feature <slug>`
 5. Orchestrator invokes Git Preflight, then Spec Writer on success
 
 ## Key documents
@@ -37,3 +37,5 @@ An agnostic, reusable framework for **Specification-Driven Development (SDD)**.
 ## Design principle
 
 **Projects adopt the harness. The harness does not know which projects use it.**
+
+Markdown roles + governance are the source of truth. Any IDE or agent host is packaging only — configure the workspace so PROJECT_ROOT and governance are visible.

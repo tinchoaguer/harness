@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Install harness agent definitions into a Cursor agents directory.
+# Install agent role cards into an agent-host custom-agents directory.
 #
 # Usage:
 #   ./install-agents.sh <source-dir> <destination-dir> [copy|symlink]
 #
 # Example:
-#   ./install-agents.sh ../agents ~/.cursor/agents
-#   ./install-agents.sh ../agents ~/.cursor/agents symlink
+#   ./install-agents.sh ../agents /path/to/host/agents
+#   ./install-agents.sh ../agents /path/to/host/agents symlink
 
 set -euo pipefail
 

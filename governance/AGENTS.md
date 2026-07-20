@@ -14,7 +14,7 @@ It separates reusable governance and agents from project-specific knowledge, spe
 
 ## PROJECT_ROOT
 
-The **project root** is the Cursor workspace root that contains:
+The **project root** is the workspace root that contains:
 
 - `work/feature_list.json`
 - `knowledge/`
@@ -23,7 +23,7 @@ All project paths in agent instructions are relative to PROJECT_ROOT unless stat
 
 ## Harness package
 
-The **harness package** contains reusable governance and agents. Projects link to it via submodule, copy, or Cursor rules (see `governance/deployment.md`).
+The **harness package** contains reusable governance and agents. Projects link to it via submodule, copy, or an IDE/workspace pointer (see `governance/deployment.md`).
 
 Governance paths (`governance/AGENTS.md`, `governance/spec_guidelines.md`, etc.) refer to the harness governance location configured for the project.
 
@@ -51,7 +51,7 @@ harness/
         reviewer.md
 ```
 
-Deploy `agents/` to `~/.cursor/agents/` for cross-project reuse.
+Deploy `agents/` into the agent host’s custom-agents directory for reuse across projects (see `governance/deployment.md`).
 
 ---
 
