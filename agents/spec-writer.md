@@ -32,6 +32,7 @@ All paths below are relative to PROJECT_ROOT unless prefixed with `governance/`.
 - Ensure the specification satisfies the requested objective.
 - Follow EARS notation and REQ-NNN identifiers per `governance/spec_guidelines.md`.
 - Preserve traceability across requirements, design, and tasks.
+- Keep every REQ, design path, task, and AC inside this Feature’s PROJECT_ROOT (see Feature scope in `governance/spec_guidelines.md`).
 
 ---
 

@@ -93,17 +93,11 @@ Do not put harness SoT only in IDE-specific rules files; keep authority in `gove
 
 # Linking Governance
 
-Choose one approach per project:
+Record the governance location in `HARNESS.md` at PROJECT_ROOT. Choose one packaging approach:
 
-## Option A: Sibling harness repo (recommended for this monorepo)
+## Option A: External governance package (relative path)
 
-```
-market-data-proyect/
-    harness/           # governance source
-    market-data-be/    # PROJECT_ROOT
-```
-
-Reference governance via relative path in `HARNESS.md` (and any IDE rules that only point at that path):
+Place the harness package outside PROJECT_ROOT and point `HARNESS.md` at its `governance/` directory (path is project-local packaging; the harness does not prescribe a parent folder layout):
 
 ```text
 ../harness/governance/
@@ -139,7 +133,7 @@ Copy `harness/governance/` into the project. Update manually when the harness ev
 
 # Invoking the Harness
 
-1. Open the **project workspace** (PROJECT_ROOT, e.g. `market-data-be/`)
+1. Open PROJECT_ROOT as the workspace
 2. Load the **Orchestrator** agent (role card as system prompt)
 3. User command: `Start Feature <slug>`
 4. Orchestrator invokes **Git Preflight**, then other subagents **one stage at a time**, reading each Common Result before the next stage
@@ -150,16 +144,9 @@ How the host spawns a subagent (nested task, handoff, or new session) is packagi
 
 ---
 
-# Cross-Repo Features
+# Multiple PROJECT_ROOTs
 
-The harness does not coordinate features across multiple repositories.
-
-If a feature spans backend and frontend:
-
-- **Split:** one feature per repo with linked slugs in descriptions, or
-- **Meta-project:** a parent workspace owns `work/` and `specs/` and documents which repos each task targets
-
-Document the chosen pattern in the project's `knowledge/architecture.md`.
+The harness does not coordinate Features across multiple PROJECT_ROOTs. Each Feature runs entirely inside one PROJECT_ROOT. Any multi-repository planning or integration is outside the harness.
 
 ---
 

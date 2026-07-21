@@ -18,7 +18,7 @@ Example:
 
 ```
 specs/
-    market-data-analysis/
+    sample-feature/
         requirements.md
         design.md
         tasks.md
@@ -227,6 +227,21 @@ Likewise, no requirement should remain without implementation.
 
 ---
 
+# Feature scope (PROJECT_ROOT)
+
+A Feature Specification is scoped to **one PROJECT_ROOT** (the workspace that owns `work/feature_list.json` for this Feature).
+
+Requirements, design paths, tasks, and acceptance criteria must be satisfiable by changing only that PROJECT_ROOT.
+
+**Out of scope for this Feature’s specification:**
+
+- Edits or deliverables outside PROJECT_ROOT
+- Cross-PROJECT_ROOT coordination, handoffs, or planning for other Features/repositories
+
+If an outcome needs files in another PROJECT_ROOT, that work belongs in a separate Feature whose PROJECT_ROOT is that repository — not in this specification.
+
+---
+
 # Writing Principles
 
 Specifications should be:
@@ -238,6 +253,7 @@ Specifications should be:
 - maintainable
 - implementation-independent (requirements)
 - technically consistent
+- scoped to PROJECT_ROOT (see above)
 
 Avoid:
 
@@ -246,6 +262,7 @@ Avoid:
 - implementation details inside requirements
 - business rules inside tasks
 - unnecessary complexity
+- deliverables or paths outside PROJECT_ROOT
 
 ---
 
@@ -307,5 +324,6 @@ A Feature Specification is considered complete when:
 - every task contributes to one or more requirements
 - acceptance criteria are complete and measurable
 - traceability is preserved across all specification documents
+- every REQ, design path, task, and AC is scoped to this Feature’s PROJECT_ROOT (no deliverables outside PROJECT_ROOT)
 
 A complete specification should allow the Implementer to execute the Feature without making architectural or functional decisions.
