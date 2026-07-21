@@ -83,6 +83,7 @@ You must not inspect or modify:
 - Produce deterministic specifications.
 - Remove ambiguity whenever possible.
 - Define observable behavior and testable acceptance criteria.
+- When `knowledge/testing-policy.md` exists, align `design.md` Testing Strategy and test-related tasks with it (strong oracles, layer placement, anti-bloat).
 - Never assume missing requirements.
 - Request clarification through a BLOCKED result when required.
 

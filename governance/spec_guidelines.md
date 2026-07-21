@@ -149,7 +149,9 @@ Testing approach.
 
 Required test types.
 
-Coverage expectations.
+Coverage expectations (which behaviors/ACs have automated oracles — not line-coverage %).
+
+When the project provides `knowledge/testing-policy.md`, the Testing Strategy **must** align with it (layers, oracle strength, anti-bloat). Prefer a table: Behavior | Layer | Oracle | Location.
 
 ---
 

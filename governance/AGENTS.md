@@ -64,6 +64,7 @@ Each project that adopts the harness must provide:
     knowledge/
         architecture.md
         conventions.md
+        testing-policy.md   # optional; when present, binds Feature tests
         adr/
     work/
         feature_list.json
@@ -79,6 +80,8 @@ Each project that adopts the harness must provide:
 ```
 
 Source code layout is defined in `knowledge/architecture.md` for that project.
+
+When `knowledge/testing-policy.md` exists, Spec Writer, Implementer, and Reviewer must align Feature Testing Strategy and test quality with it.
 
 Specification structure is defined in `governance/spec_guidelines.md` (reusable).
 
@@ -107,6 +110,7 @@ Project-specific context:
 
 - architecture and module layout
 - coding conventions
+- testing policy (optional `testing-policy.md` — oracle strength, layers, anti-bloat)
 - architecture decision records (ADRs)
 
 Guides implementation but never overrides governance.

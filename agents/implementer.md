@@ -30,7 +30,7 @@ Writable source paths are defined in `knowledge/architecture.md`.
 - Execute tasks in `specs/<slug>/tasks.md` in order.
 - Implement source code per `specs/<slug>/design.md`.
 - Satisfy all requirements in `specs/<slug>/requirements.md`.
-- Write unit tests for new behavior.
+- Write unit tests for new behavior per the Feature Testing Strategy and `knowledge/testing-policy.md` when present (strong oracles; extend existing suites before adding files).
 - Fix review findings when the workflow returns to Implementation.
 - Mark completed tasks in `tasks.md` checkboxes.
 
@@ -82,7 +82,8 @@ You must not modify:
 
 - Implement only approved specifications.
 - Keep implementation aligned with the specification.
-- Write tests for new behavior.
+- Write tests for new behavior; prefer oracle strength over test-file count.
+- If the Feature Testing Strategy conflicts with `knowledge/testing-policy.md`, report BLOCKED for specification fix.
 - Do not introduce unrelated changes.
 - Report BLOCKED whenever implementation cannot continue.
 
